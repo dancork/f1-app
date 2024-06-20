@@ -1,24 +1,28 @@
 # F1 App
 
-This app utilises the [Open F1 API](https://openf1.org) as a data source to display data about past, and live, grand prix.
+This app utilises the [Open F1 API](https://openf1.org) as a data source to display data about past, and live, Formula 1 grand prix.
 
 The application is currently hosted at [f1-app-dc.netlify.app](https://f1-app-dc.netlify.app).
 
 ## Technology Used
 
-- pnpm, as package manager
-- typescript
-- vite with swc
-- jotai, for state management
-- axios, for making http requests
-- tanstack query, for managing statefulness of http requests
-- luxon, for manipulating dates
-- remeda, a quite of typescript utilities
-- eslint, for code quality
-- playwright, for end-to-end testing
+**Language: Typescript**
+A strongly-typed, superset of JavaScript which is useful for speeding up development and catching potential errors.
 
-- github actions, to run linting and e2e tests when deploying
-- netlify, to host the app
+**Package management: pnpm**
+Chose pnpm over npm as the package manager because it's faster and more disk space efficient.
+
+**Dev server/bundler: Vite with swc**
+It's a low config and very performant solution for building modern, single page apps using React.
+
+**Data fetching and state management: Jotai, Axios and Tanstack Query**
+Jotai provides atomic state management in React which, in an app this size, is less cumbersome than solutions like redux. Axios simplifies the building and execution of making HTTP requests to the API. Tanstack query, manages these http requests and makes then stateful through the use of a query cache.
+
+**Code quality: eslint, prettier and playwright**
+The application uses eslint with a fairly "boilerplate" setup as well as prettier to keep the code legibile and consistent. Playwright has been installed to provide cross-browser end-to-end testing as it tends to be less flaky than alternatives such as Cypress.
+
+**Deployment: Github Actions and Netlify**
+On push linting and e2e tests will run via github actions. With caching this is very quick and provides reassurance of quality. At the same time, the app is deployed to netlify as it is free and reliable hosting.
 
 ## Setup
 
