@@ -1,4 +1,4 @@
-name: Playwright Tests
+name: Lint and E2E tests
 on:
   push:
     branches:
@@ -65,5 +65,8 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit == 'true'
         run: pnpm exec playwright install-deps
 
+      - name: Run lint check
+        run: pnpm lint
+
       - name: Run Playwright tests
-        run: pnpm exec playwright test
+        run: pnpm e2e
