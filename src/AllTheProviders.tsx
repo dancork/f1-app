@@ -14,6 +14,7 @@ export const AllTheProviders = ({
       grayColor="mauve"
       radius="large"
       appearance="dark"
+      scaling="110%"
     >
       {children}
     </Theme>

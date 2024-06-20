@@ -1,6 +1,14 @@
 import { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { Avatar, Card, Flex, Inset, Reset, Text } from '@radix-ui/themes'
+import {
+  Avatar,
+  Card,
+  Flex,
+  Heading,
+  Inset,
+  Reset,
+  Text,
+} from '@radix-ui/themes'
 import { useAtomValue } from 'jotai'
 import { first, last } from 'remeda'
 import { ThickArrowUpIcon, ThickArrowDownIcon } from '@radix-ui/react-icons'
@@ -96,22 +104,23 @@ export const GrandPrixResult = () => {
                             size="5"
                             src={driver.headshot_url}
                             fallback={driver.name_acronym}
+                            aria-hidden
                           />
                         </Inset>
                       )}
                       <Flex direction="column">
                         <Flex gap="2" asChild>
-                          <Text size={finalPosition <= 3 ? '5' : '3'}>
+                          <Heading
+                            as="h2"
+                            size={finalPosition <= 3 ? '5' : '3'}
+                          >
                             <Text weight="medium">{driver.full_name}</Text>
-                            <Text color="gray" weight="light">
+                            <Text color="gray" weight="light" aria-hidden>
                               #{driver.driver_number}
                             </Text>
-                          </Text>
+                          </Heading>
                         </Flex>
-                        <Text
-                          size={finalPosition <= 3 ? '3' : '1'}
-                          // style={{ color: `#${driver.team_colour}` }}
-                        >
+                        <Text size={finalPosition <= 3 ? '3' : '1'}>
                           {driver.team_name}
                         </Text>
                       </Flex>
@@ -126,18 +135,23 @@ export const GrandPrixResult = () => {
 
                       {positionsGained > 0 && (
                         <Flex align="center">
-                          <ThickArrowUpIcon color="green" />
-                          <Text size="2" color="gray">
+                          <ThickArrowUpIcon color="green" aria-hidden />
+                          <Text
+                            size="2"
+                            color="gray"
+                            aria-label={`${positionsGained} positions gained`}
+                          >
                             {positionsGained}
                           </Text>
                         </Flex>
                       )}
                       {positionsGained < 0 && (
                         <Flex align="center">
-                          <ThickArrowDownIcon color="red" />
+                          <ThickArrowDownIcon color="red" aria-hidden />
                           <Text
                             size={finalPosition <= 3 ? '2' : '1'}
                             color="gray"
+                            aria-label={`${positionsGained} positions lost`}
                           >
                             {Math.abs(positionsGained)}
                           </Text>
