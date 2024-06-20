@@ -4,13 +4,15 @@ import {
   Avatar,
   Card,
   Flex,
+  Grid,
   Heading,
   Inset,
   Reset,
+  Skeleton,
   Text,
 } from '@radix-ui/themes'
 import { useAtomValue } from 'jotai'
-import { first, last } from 'remeda'
+import { first, last, range } from 'remeda'
 import { ThickArrowUpIcon, ThickArrowDownIcon } from '@radix-ui/react-icons'
 
 import { fetchSessions } from '../api/sessions'
@@ -31,19 +33,20 @@ export const GrandPrixResult = () => {
         session_name: 'Race',
         session_type: 'Race',
       }),
+    initialData: [],
     enabled: Boolean(selectedMeeting),
   })
 
-  const { session_key } = last(sessions ?? []) ?? {}
+  const { session_key } = sessions[0] ?? {}
 
   const { data: positions, isLoading: isPositionsLoading } = useQuery({
-    queryKey: ['sessions', sessions?.[0].session_key, 'positions'],
+    queryKey: ['sessions', session_key, 'positions'],
     queryFn: () => fetchPositions({ session_key }),
     enabled: session_key !== undefined,
   })
 
   const { data: drivers, isLoading: isDriversLoading } = useQuery({
-    queryKey: ['sessions', sessions?.[0].session_key, 'drivers'],
+    queryKey: ['sessions', session_key, 'drivers'],
     queryFn: () => fetchDrivers({ session_key }),
     enabled: session_key !== undefined,
   })
@@ -62,13 +65,20 @@ export const GrandPrixResult = () => {
     )
   }, [drivers, driverPositions])
 
-  if (
-    !selectedMeeting ||
-    isSessionsLoading ||
-    isDriversLoading ||
-    isPositionsLoading
-  ) {
+  if (!selectedMeeting) {
     return null
+  }
+
+  if (isSessionsLoading || isDriversLoading || isPositionsLoading) {
+    return (
+      <Grid rows="repeat(3, 82px) repeat(17, 70px)" gapY="2">
+        {range(1, 20).map(number => (
+          <Skeleton key={number} loading>
+            <Card>Loading</Card>
+          </Skeleton>
+        ))}
+      </Grid>
+    )
   }
 
   return (

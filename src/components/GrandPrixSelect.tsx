@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { Flex, Select } from '@radix-ui/themes'
+import { Flex, Select, Skeleton } from '@radix-ui/themes'
 import { useAtom } from 'jotai'
 import { DateTime } from 'luxon'
 
@@ -8,14 +8,10 @@ import { selectedMeetingAtom } from '../store'
 
 export const GrandPrixSelect = () => {
   const [selectedMeeting, setSelectedMeeting] = useAtom(selectedMeetingAtom)
-  const { data: meetings, isLoading } = useQuery({
+  const { data: meetings, isLoading: isMeetingsLoading } = useQuery({
     queryKey: ['meetings'],
     queryFn: () => fetchMeetings({ year: DateTime.now().year }),
   })
-
-  if (isLoading) {
-    return null
-  }
 
   return (
     <Flex direction="column" asChild>
@@ -31,11 +27,13 @@ export const GrandPrixSelect = () => {
             )
           }
         >
-          <Select.Trigger
-            variant="surface"
-            aria-label="Choose a Grand Prix to view data"
-            placeholder="Select Grand Prix"
-          />
+          <Skeleton loading={isMeetingsLoading}>
+            <Select.Trigger
+              variant="surface"
+              aria-label="Choose a Grand Prix to view data"
+              placeholder="Select Grand Prix"
+            />
+          </Skeleton>
           <Select.Content>
             {meetings?.map(meeting => (
               <Select.Item

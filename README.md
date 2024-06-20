@@ -72,7 +72,7 @@ $ pnpm e2e --ui
 
 Sometimes it is necessary, depending on your OS, to install playwright browsers and dependencies. Details about how to do this [can be found on their documention website](https://playwright.dev/docs/browsers).
 
-## Roadmap
+## Roadmap
 
 The API can supply a lot of data, and in real-time. For this reason I think it would be fun to add the following functionality:
 
@@ -85,3 +85,5 @@ The API can supply a lot of data, and in real-time. For this reason I think it w
   - Weather and track temperatures
   - Racing indcidents like flags and safety cars
 - Sessions other than the Grand Prix. Eg. practice, qualifying, sprints
+
+Also need to add error handling as currently everything works on the "happy path".
